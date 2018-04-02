@@ -1,4 +1,4 @@
-### Snake Progress
+### Snake Progress bar
 
 ProgressBar is a class that allows to show a progress bar in console.
 The progress bar is very felixble, you can modifie the size, prefix, bar fill character (any chacarater, and yes, you can use emojis) you can show the percentage or the balance if you need them.
@@ -8,7 +8,7 @@ The progress bar is very felixble, you can modifie the size, prefix, bar fill ch
 For the correct use, you musts to have Python 3 or above version.
 
 ```
-pip install snake_progress
+pip install snake_progress_bar
 ```
 
 #### Usage
