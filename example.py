@@ -1,4 +1,4 @@
-from progress_bar import ProgressBar
+from snake_progress import ProgressBar
 from time import sleep
 
 #First example

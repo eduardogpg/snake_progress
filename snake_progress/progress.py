@@ -4,15 +4,15 @@ class ProgressBar(object):
         """
         @params:
         
-            fill                - Optional  : bar fill character (Str)
-            empty               - Optional  : bar empty character (Str)
+            fill                - Optional  : Bar fill character, default █ (Str)
+            empty               - Optional  : Bar empty character, default blank space (Str)
             size                - Optional  : Bar size (Int)
-            prefix              - Optional  : prefix string (Str)
+            prefix              - Optional  : Prefix string (Str)
             current             - Optional  : Initial position (Int)
             buffer              - Optional  : Buffer size (Int)
             show_percentage     - Optional  : If True, the percentage is shown at the end, example 80% (Bool)
             show_balance        - Optional  : If True, the balance is shown at the end, example (80/100) (Bool)
-            precision           - Optional  : Float precision
+            precision           - Optional  : Float precision (Int)
 
         >>> progress_bar = ProgressBar(size=50, show_balance=True)
         >>> progress_bar.update_progress(10, 100, True)
