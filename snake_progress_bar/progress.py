@@ -1,18 +1,20 @@
 class ProgressBar(object):
         
-    def __init__(self, fill='█', empty=' ', prefix='Progress', auto_size_bar=True, custome_size_bar=100, show_percentage=True, show_balance=True, precision=2):
+    def __init__(self, fill='█', empty=' ', prefix='Progress', auto_bar_size=True, custome_bar_size=100, show_percentage=True, show_balance=True, precision=2):
         
         self.fill = fill
         self.empty = empty
         self.prefix = prefix
 
-        self.auto_size_bar = auto_size_bar
-        self.custome_size_bar = custome_size_bar
+        self.auto_bar_size = auto_bar_size
+        self.custome_bar_size = custome_bar_size
         self.show_percentage = show_percentage
         self.show_balance = show_balance
         self.precision = '.{}f'.format(precision)
 
         self.set_variables()
+        self.terminal_size = self.terminal_size()
+        
 
     def set_variables(self, current=0, buffer=1, skip=False, completed=False):
         self.current = current
@@ -24,13 +26,18 @@ class ProgressBar(object):
         percentage = (self.current * 100) / self.buffer
         return float(format(percentage, self.precision))
 
-    def size_bar(self):
-        if self.auto_size_bar:
-           full_progress_bar_size = self.terminal_size() - len(self.right_text())
-           return int((full_progress_bar_size * 80) / 100) #Print in only the 80 percentage of the window
+    def bar_size(self):
+        if self.auto_bar_size:
+           return self.bar_size_suggestion()
         else:
-            return self.custome_size_bar
+            return self.custome_bar_size
 
+    def bar_size_suggestion(self):
+        percentage_text = int( len(self.full_text()) * 100 ) / self.terminal_size
+        percentage_bar = int(100 - percentage_text)
+
+        return int((percentage_bar * self.terminal_size) / 100)
+            
     def terminal_size(self):
         import os
         
@@ -50,13 +57,16 @@ class ProgressBar(object):
         return "{} {} {}".format(self.percentage_format(), self.balance_format(), self.skip_format())
 
     def progress_bar(self):
-        size_bar = self.size_bar()
-        progress = (self.percentage_completed() * size_bar) / 100
+        bar_size = self.bar_size()
+        progress = (self.percentage_completed() * bar_size) / 100
         
-        empty = self.empty * int(size_bar - progress)
+        empty = self.empty * int(bar_size - progress)
         progress = self.fill * int(progress)
 
         return "{}{}".format(progress, empty)
+
+    def full_text(self):
+        return "{} {}".format(self.prefix, self.right_text())
 
     def full_progress_bar(self):
         return "{} |{}| {}".format(self.prefix, self.progress_bar(), self.right_text())
